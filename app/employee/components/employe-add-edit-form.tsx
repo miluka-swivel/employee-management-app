@@ -3,10 +3,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import EmployeeService from '@/app/lib/employee-service';
+import { useEffect } from 'react';
 
 
-export default function EmployeeAddEditForm() {
-
+export default function EmployeeAddEditForm(props: any) {
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required").min(6, "Minimum length is 6 characters").max(10, "Max length is 10 characters"),
@@ -16,17 +16,31 @@ export default function EmployeeAddEditForm() {
     gender: Yup.string().matches(/^^[FM]$/, "Inavalid gender option")
   });
 
+  const user = props?.user;
+  const isAddMode = !user;
   const formOptions = { resolver: yupResolver(validationSchema) };
-
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
+
+  useEffect(() => {
+    if (!isAddMode) {
+      reset(props.user);
+    }
+  }, [])
+
   const employeeService = new EmployeeService();
 
   const EmployeeAddEditForm = async (data: any) => {
     try {
-      debugger
-      let employee: Employee = data as Employee;
-      const createEmployee = await employeeService.createEmployee(employee);
+      if (isAddMode) {
+        let employee: Employee = data as Employee;
+        const createEmployee = await employeeService.createEmployee(employee);
+      }
+      else {
+        debugger
+        let employee: Employee = data as Employee;
+        const updatedEmployee = await employeeService.updateEmployee(employee.id, employee);
+      }
     }
     catch (error) {
       console.log(error);
@@ -90,7 +104,7 @@ export default function EmployeeAddEditForm() {
         <div className="row d-flex">
           <div className="col flex-grow-1"></div>
           <div className="col d-flex justify-content-end">
-            <button type="submit">Add</button>
+            <button type="submit">{!isAddMode? "Update" : "Save"}</button>
           </div>
         </div>
 

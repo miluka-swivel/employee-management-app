@@ -7,7 +7,7 @@ const Employees = [
         "number": "+94771277218",
         "gender": "M",
         "id": "1",
-        "photo": "https://randomuser.me/api/portraits/men/92.jpg"
+        "photo": "/images/no-profile.jpg"
     },
     {
         "first_name": "Lindsay",
@@ -110,52 +110,50 @@ const Employees = [
     }
 ];
 
-const GenerateTableRows = () =>
-{
-   return Employees.map((employee, index: number) => {
-    return(
-        <tr key={index}>
-            <td>
-                <img src={employee.photo} />
-            </td>
-            <td>
-                {employee.first_name}
-            </td>
-            <td>{employee.last_name}</td>
-            <td>{employee.email}</td>
-            <td>{employee.number}</td>
-            <td>{employee.gender == "M" ? "Male" : "Female"}</td>
-            <td>
-            <div className="d-flex">
-                <button type="button" className="btn btn-danger mx-2"><i className="bi bi-trash"></i></button>
-                <button type="button" className="btn btn-success"><i className="bi bi-person"></i></button>
-                </div>
-            </td>
-        </tr>
-    )
+const GenerateTableRows = () => {
+    return Employees.map((employee, index: number) => {
+        return (
+            <tr key={index}>
+                <td>
+                    <img src={employee.photo} width={128} height={128} />
+                </td>
+                <td>
+                    {employee.first_name}
+                </td>
+                <td>{employee.last_name}</td>
+                <td>{employee.email}</td>
+                <td>{employee.number}</td>
+                <td>{employee.gender == "M" ? "Male" : "Female"}</td>
+                <td>
+                    <div className="d-flex">
+                        <button type="button" className="btn btn-danger mx-2"><i className="bi bi-trash"></i></button>
+                        <button type="button" className="btn btn-success"><i className="bi bi-person"></i></button>
+                    </div>
+                </td>
+            </tr>
+        )
     });
 }
 
-export default function EmployeeTable()
-{
-return (
-    <div className="p-5">
-    <table className="table">
-        <thead>
-            <tr>
-                <th></th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Gender</th>
-            <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {GenerateTableRows()}
-        </tbody>
-    </table>
-    </div>
-);
+export default function EmployeeTable() {
+    return (
+        <div className="p-5">
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {GenerateTableRows()}
+                </tbody>
+            </table>
+        </div>
+    );
 }

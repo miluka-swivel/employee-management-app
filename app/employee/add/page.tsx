@@ -8,7 +8,6 @@ export default function Page() {
         <div className="container">
             <div>
                 <div className="d-flex justify-content-end mb-3">
-                    {/* <button type="button" className={Styles.employeebtn} onClick={handleClick}>List View</button> */}
                     <Link href={"/employee/list"} className={Styles.button}>List View</Link>
                 </div>
                 <EmployeeAddEditForm></EmployeeAddEditForm>
