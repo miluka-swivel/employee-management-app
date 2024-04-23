@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import EmployeeService from '@/app/lib/employee-service';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 export default function EmployeeAddEditForm(props: any) {
@@ -16,6 +17,7 @@ export default function EmployeeAddEditForm(props: any) {
     gender: Yup.string().matches(/^^[FM]$/, "Inavalid gender option")
   });
 
+  const router = useRouter();
   const user = props?.user;
   const isAddMode = !user;
   const formOptions = { resolver: yupResolver(validationSchema) };
@@ -37,10 +39,10 @@ export default function EmployeeAddEditForm(props: any) {
         const createEmployee = await employeeService.createEmployee(employee);
       }
       else {
-        debugger
         let employee: Employee = data as Employee;
         const updatedEmployee = await employeeService.updateEmployee(employee.id, employee);
       }
+      router.push("/employee/list");
     }
     catch (error) {
       console.log(error);
@@ -101,14 +103,16 @@ export default function EmployeeAddEditForm(props: any) {
             {errors.gender?.message}
           </div>
         </div>
-        <div className="row d-flex">
+        <div className="row d-flex mb-3 me-3">
           <div className="col flex-grow-1"></div>
           <div className="col d-flex justify-content-end">
-            <button type="submit">{!isAddMode? "Update" : "Save"}</button>
+            <button type="submit" className='btn btn-outline-primary'>{!isAddMode? "Update" : "Save"}</button>
           </div>
         </div>
 
       </form>
     </div>
+
+   
   )
 }
