@@ -8,7 +8,7 @@ export default function EmployeeCard(props: any) {
         }
         return imagePath;
     }
-    console.log(props)
+    
     return (
         <div className="card p-3 mb-2 w-100">
             <img className="card-img-top" src={getProfilePicture(props.profilePicture)} />

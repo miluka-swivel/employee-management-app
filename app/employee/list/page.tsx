@@ -28,8 +28,6 @@ export default function Page() {
         fetchData();
     }, []);
 
-
-
     return (
         <div className="container-md container-sm">
             <div className="d-flex mt-2 text-end justify-content-end align-items-center">
