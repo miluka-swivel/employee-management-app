@@ -10,9 +10,8 @@ async function getData(id: string) {
 
 export default async function Page(params: { params: { employeeId: string } }) {
   const { employeeId } = params.params;
-  let employeeData = await getData("6624589ca7c26e1bbfad47d1");
+  let employeeData = await getData(employeeId);
   employeeData.id = employeeId;
-  console.log(employeeId);
   return (
     <div className="container">
       <div>
