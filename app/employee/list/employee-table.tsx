@@ -26,7 +26,6 @@ const GenerateTableRows = (employees : Employee[]) => {
                 <td>
                     <div className="d-flex">
                         <button type="button" className="btn btn-danger mx-2"><i className="bi bi-trash"></i></button>
-                        {/* <button type="button" className="btn btn-success"><i className="bi bi-person"></i></button> */}
                         <Link href={`edit/${employee.id}`} className="btn btn-success"><i className="bi bi-person"/></Link>
                     </div>
                 </td>

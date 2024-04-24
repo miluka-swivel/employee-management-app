@@ -22,8 +22,6 @@ export default function Page() {
                 SetEmployees(employeeList);
             } catch (error) {
                 console.error('Error fetching data:', error);
-            } finally {
-                //setLoading(false);
             }
         };
 
