@@ -1,5 +1,4 @@
 import Link from "next/link";
-import EmployeeCard from "./employee-card";
 
 const GenerateTableRows = (employees : Employee[]) => {
 
@@ -10,7 +9,7 @@ const GenerateTableRows = (employees : Employee[]) => {
         return imagePath;
     }
 
-    return employees.map((employee, index: number) => {
+    return employees?.map((employee, index: number) => {
         return (
             <tr key={index}>
                 <td>
