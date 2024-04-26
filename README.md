@@ -1,8 +1,14 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## A Nextjs front end project that manages employees.
+The application manages employees through this frontend application, which has the capabilities to display employees in a grid view and a table view. In addition user has the capability to add employees, edit employees and delete employees.  
 
-## Getting Started
+Configurations  
+For the application to work accordingly, below configuration changes should be done.  
+* **NEXT_PUBLIC_SERVICE_BASE_URL** - This should be the external API url that manages employees. This can be hosted in a different domain or in a different port in your local machine. Make sure to correctly configure this backend url
+eg: - http://localhost:{PORT}/api  
 
-First, run the development server:
+</br>
+**How to start application in development environment**  
+After configuration changes first, run the development server:
 
 ```bash
 npm run dev
@@ -16,18 +22,6 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
