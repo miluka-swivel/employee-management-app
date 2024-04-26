@@ -1,12 +1,11 @@
 ## A Nextjs front end project that manages employees.
 The application manages employees through this frontend application, which has the capabilities to display employees in a grid view and a table view. In addition user has the capability to add employees, edit employees and delete employees.  
 
-Configurations  
+**Configurations**  
 For the application to work accordingly, below configuration changes should be done.  
 * **NEXT_PUBLIC_SERVICE_BASE_URL** - This should be the external API url that manages employees. This can be hosted in a different domain or in a different port in your local machine. Make sure to correctly configure this backend url
-eg: - http://localhost:{PORT}/api  
+eg: - http://localhost:{PORT}/api   
 
-</br>
 **How to start application in development environment**  
 After configuration changes first, run the development server:
 
