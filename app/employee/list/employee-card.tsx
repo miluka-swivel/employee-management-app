@@ -10,7 +10,7 @@ export default function EmployeeCard(props: any) {
     }
     
     return (
-        <div className="card p-3 mb-2 w-100">
+        <div data-testid="employee-card" className="card p-3 mb-2 w-100">
             <img className="card-img-top" src={getProfilePicture(props.profilePicture)} />
             <div className="card-body d-flex flex-column align-items-start">
                 <span>{props.firstName} {props.lastName}</span>
