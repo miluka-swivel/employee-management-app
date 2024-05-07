@@ -13,7 +13,7 @@ const GenerateTableRows = (employees : Employee[]) => {
         return (
             <tr key={index}>
                 <td>
-                    <img src={getProfilePicture("")} width={128} height={128} />
+                    <img src={getProfilePicture("")} width={128} height={128} alt="Profile Picture" />
                 </td>
                 <td>
                     {employee.firstName}
@@ -35,7 +35,7 @@ const GenerateTableRows = (employees : Employee[]) => {
 
 export default function EmployeeTable(props : any) {
     return (
-        <div className="p-5">
+        <div data-testid="employee-table-view" className="p-5">
             <table className="table">
                 <thead>
                     <tr>

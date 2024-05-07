@@ -27,7 +27,7 @@ const renderRows = (employees: Employee[]) => {
 
 export default function EmployeeGridView(props: any) {
   return (
-    <div className="p-3">
+    <div data-testid="employee-grid-view" className="p-3">
       {renderRows(props.employeesList)}
     </div>
   );
