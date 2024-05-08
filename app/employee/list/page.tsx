@@ -35,7 +35,7 @@ export default function Page() {
                     <button type="button" className={styles.button} onClick={() => router.push("/employee/add")}>ADD EMPLOYEE</button>
                 </div>
                 <div>
-                    <button type="button" className={`rounded-circle btn-lg ${styles.toggleviewbtn}`} onClick={() => toggleEmployeeView(currentView === 'grid' ? 'table' : 'grid')}><i className={`bi bi-${currentView === 'grid' ? 'list' : 'grid-fill'}`}></i></button>
+                <button data-testid="toggleviewbtn" type="button" className={`rounded-circle btn-lg ${styles.toggleviewbtn}`} onClick={() => toggleEmployeeView(currentView === 'grid' ? 'table' : 'grid')}><i data-testid='toggleviewbtn-i' className={`bi bi-${currentView === 'grid' ? 'list' : 'grid-fill'}`}></i></button>
                 </div>
             </div>
             {currentView === 'grid' ? <EmployeeGridView employeesList={employees} /> : <EmployeeTable employeesList={employees} />}

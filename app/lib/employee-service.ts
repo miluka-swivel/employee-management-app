@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default class EmployeeService {
   baseUrl = process.env.NEXT_PUBLIC_SERVICE_BASE_URL;
-  private mapToEmployee(data: any): Employee {
+  public mapToEmployee(data: any): Employee {
     return {
       id: data._id,
       firstName: data.firstName,
