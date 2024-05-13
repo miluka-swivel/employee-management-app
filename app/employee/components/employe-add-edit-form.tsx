@@ -31,30 +31,33 @@ export default function EmployeeAddEditForm(props: any) {
 
   const employeeService = new EmployeeService();
 
-  const EmployeeAddEditForm = async (data: any) => {
+  const employeeAddEditForm = async (data: any) => {
     try {
       if (isAddMode) {
         let employee: Employee = data as Employee;
-        const createEmployee = await employeeService.createEmployee(employee);
+        await employeeService.createEmployee(employee);
+        console.log("Button clicked");
       }
       else {
         let employee: Employee = data as Employee;
-        const updatedEmployee = await employeeService.updateEmployee(employee.id, employee);
+        await employeeService.updateEmployee(employee.id, employee);
       }
+      console.log("router ", router);
       router.push("/employee/list");
+     
     }
     catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
   }
 
   return (
     <div className="mx-auto card w-50">
-      <form onSubmit={handleSubmit(EmployeeAddEditForm)}>
+        <form onSubmit={handleSubmit(EmployeeAddEditForm)}>
         <div className="row mb-2 mt-4">
           <div className="col d-flex justify-content-end">
-            <label>First Name</label>
+            <label htmlFor="firstName">First Name</label>
           </div>
           <div className="col">
             <input type="text" {...register("firstName")} id="firstName"></input>
@@ -63,7 +66,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Last Name</label>
+            <label htmlFor="lastName">Last Name</label>
           </div>
           <div className="col">
             <input type="text" {...register("lastName")} id="lastName"></input>
@@ -72,7 +75,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Email</label>
+            <label htmlFor='email'>Email</label>
           </div>
           <div className="col">
             <input type="text" {...register("email")} id="email"></input>
@@ -81,7 +84,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Phone</label>
+            <label htmlFor='phone'>Phone</label>
           </div>
           <div className="col">
             <input type="text" {...register("phone")} id="phone"></input>
@@ -90,7 +93,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Gender</label>
+            <label htmlFor='gender'>Gender</label>
           </div>
           <div className="col" >
             <select id="gender" {...register("gender")}>
@@ -105,7 +108,7 @@ export default function EmployeeAddEditForm(props: any) {
         <div className="row d-flex mb-3 me-3">
           <div className="col flex-grow-1"></div>
           <div className="col d-flex justify-content-end">
-            <button type="submit" className='btn btn-outline-primary'>{!isAddMode? "Update" : "Save"}</button>
+            <button type="submit" className='btn btn-outline-primary' data-testid="submitbtn">{!isAddMode? "Update" : "Save"}</button>
           </div>
         </div>
 

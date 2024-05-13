@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --coverage",
+    "test1": "jest --findRelatedTests __tests__\\employee_add_edit_form.test.tsx",
     "test:watch": "test"
   },
   "dependencies": {
