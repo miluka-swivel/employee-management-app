@@ -54,7 +54,7 @@ export default function EmployeeAddEditForm(props: any) {
 
   return (
     <div className="mx-auto card w-50">
-        <form onSubmit={handleSubmit(EmployeeAddEditForm)}>
+        <form onSubmit={handleSubmit(employeeAddEditForm)}>
         <div className="row mb-2 mt-4">
           <div className="col d-flex justify-content-end">
             <label htmlFor="firstName">First Name</label>
