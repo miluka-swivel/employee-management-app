@@ -2,14 +2,14 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EmployeeAddEditForm from '../app/employee/components/employe-add-edit-form'; // Replace with your component path
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
+import { createEmployee } from '../app/lib/employee-service';
 
-jest.mock('../app/lib/employee-service'); // Mock EmployeeService
-// jest.mock('next/navigation'); // Mock useRouter
+jest.mock('../app/lib/employee-service', () => ({
+    createEmployee: jest.fn(),
+  }));
 
-// const mockedRouter = {
-//     push: jest.fn(),
-// };
+
 
 jest.mock("next/navigation", () => ({
     useRouter() {
@@ -25,10 +25,7 @@ jest.mock("next/navigation", () => ({
 
 const useRouter = jest.spyOn(require("next/navigation"), "useRouter");
 
-const mockedEmployeeService = {
-    createEmployee: jest.fn(),
-    updateEmployee: jest.fn(),
-};
+
 
 describe('EmployeeAddEditForm component', () => {
     beforeEach(() => {
@@ -117,16 +114,14 @@ describe('EmployeeAddEditForm component', () => {
         await userEvent.type(lastNameInput, 'Doe');
         await userEvent.type(emailInput, 'john.doe@example.com');
         await userEvent.type(phoneInput, '+94771234567');
-        //userEvent.select(genderSelect, 'Male');
+        userEvent.selectOptions(genderSelect, 'M');
 
         // Submit the form
-        await act(async () => {
-            userEvent.click(screen.getByText('Save'));
-            expect(mockedEmployeeService.createEmployee).toHaveBeenCalledTimes(1);
-        });
+       
+            fireEvent.submit(screen.getByTestId('submitbtn'));
 
         // Expect successful service call and navigation
-        
+        expect(createEmployee).toHaveBeenCalledTimes(1);
         //expect(useRouter.push.call).toHaveBeenCalledWith('/employee/list');
     });
 

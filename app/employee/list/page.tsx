@@ -4,11 +4,10 @@ import EmployeeGridView from "./employee-grid-view";
 import EmployeeTable from "./employee-table";
 import styles from '@/app/employee/employee.module.css';
 import { useRouter } from "next/navigation";
-import EmployeeService from "@/app/lib/employee-service";
+import { getEmployees } from "@/app/lib/employee-service";
 
 export default function Page() {
     const router = useRouter();
-    const employeeService = new EmployeeService();
     const [currentView, setCurrentView] = useState('grid'); // 'grid' or 'table'
     const toggleEmployeeView = (view: string) => {
         setCurrentView(view);
@@ -18,7 +17,7 @@ export default function Page() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const employeeList = await employeeService.getEmployees();
+                const employeeList = await getEmployees();
                 SetEmployees(employeeList);
             } catch (error) {
                 console.error('Error fetching data:', error);

@@ -1,14 +1,13 @@
-import EmployeeService from "@/app/lib/employee-service";
 import EmployeeAddEditForm from "../../components/employe-add-edit-form";
 import Link from "next/link";
 import Styles from "@/app/employee/employee.module.css";
+import { getEmployee } from "@/app/lib/employee-service";
 
 async function getData(id: string) {
-  const employeeService = new EmployeeService();
-  return await employeeService.getEmployee(id);
+  return await getEmployee(id);
 }
 
-export default async function Page(params: { params: { employeeId: string } }) {
+export default async function Page(params: EmployeeEditParam) {
   const { employeeId } = params.params;
   let employeeData = await getData(employeeId);
   employeeData.id = employeeId;

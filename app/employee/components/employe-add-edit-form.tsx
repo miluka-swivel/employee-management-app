@@ -2,9 +2,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
-import EmployeeService from '@/app/lib/employee-service';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { createEmployee, updateEmployee } from '@/app/lib/employee-service';
 
 export default function EmployeeAddEditForm(props: any) {
 
@@ -29,18 +29,16 @@ export default function EmployeeAddEditForm(props: any) {
     }
   }, [])
 
-  const employeeService = new EmployeeService();
-
   const employeeAddEditForm = async (data: any) => {
     try {
       if (isAddMode) {
         let employee: Employee = data as Employee;
-        await employeeService.createEmployee(employee);
+        await createEmployee(employee);
         console.log("Button clicked");
       }
       else {
         let employee: Employee = data as Employee;
-        await employeeService.updateEmployee(employee.id, employee);
+        await updateEmployee(employee.id, employee);
       }
       console.log("router ", router);
       router.push("/employee/list");
@@ -53,7 +51,7 @@ export default function EmployeeAddEditForm(props: any) {
   }
 
   return (
-    <div className="mx-auto card w-50">
+    <div className="mx-auto card w-50" data-testid="employee-add-edit-form">
         <form onSubmit={handleSubmit(employeeAddEditForm)}>
         <div className="row mb-2 mt-4">
           <div className="col d-flex justify-content-end">

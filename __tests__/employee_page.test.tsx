@@ -12,7 +12,6 @@ useRouterMock.mockReturnValue(
 );
 
 jest.mock("../app/lib/employee-service"); // Mock the EmployeeService
-const EmployeeServiceMock = jest.fn();
 
 
 it("Should have Add Employee button text", async () => {

@@ -1,8 +1,7 @@
 import axios from "axios";
 
-export default class EmployeeService {
-  baseUrl = process.env.NEXT_PUBLIC_SERVICE_BASE_URL;
-  public mapToEmployee(data: any): Employee {
+export const baseUrl = process.env.NEXT_PUBLIC_SERVICE_BASE_URL;
+  function mapToEmployee(data: any): Employee {
     return {
       id: data._id,
       firstName: data.firstName,
@@ -12,27 +11,29 @@ export default class EmployeeService {
       gender: data.gender,
     };
   }
-  public async createEmployee(employee: Employee): Promise<Employee> { 
-    let url = `${this.baseUrl}/employees`;
+  
+   async function createEmployee(employee: Employee): Promise<Employee> { 
+    let url = `${baseUrl}/employees`;
     const response = await axios.post(url, employee);
     return response.data;
   }
 
-  public async getEmployee(id: string): Promise<Employee> {
-    let url = `${this.baseUrl}/employees`;
+   async function getEmployee(id: string): Promise<Employee> {
+    let url = `${baseUrl}/employees`;
     const response = await axios.get(`${url}/${id}`);
     return response?.data as Employee;
   }
 
-  public async getEmployees(): Promise<Employee[]> {
-    const response = await axios.get(`${this.baseUrl}/employees`);
-    return response.data.map(this.mapToEmployee);
+ async function getEmployees(): Promise<Employee[]> {
+    const response = await axios.get(`${baseUrl}/employees`);
+    return response.data.map(mapToEmployee);
   }
 
-  public async updateEmployee(id: string, employee: Employee): Promise<Employee> {
-    let url = `${this.baseUrl}/employees/${id}`;
+ async function updateEmployee(id: string, employee: Employee): Promise<Employee> {
+    let url = `${baseUrl}/employees/${id}`;
     const response = await axios.put(url, employee);
     return response.data as Employee;
 
   }
-}
+
+  export { createEmployee, getEmployee, getEmployees, updateEmployee, mapToEmployee };
