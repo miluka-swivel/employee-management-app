@@ -4,21 +4,25 @@ import EmployeeGridView from "./employee-grid-view";
 import EmployeeTable from "./employee-table";
 import styles from '@/app/employee/employee.module.css';
 import { useRouter } from "next/navigation";
-import { getEmployees } from "@/app/lib/employee-service";
+import { useSelector, useDispatch } from "react-redux"
+import { fetchEmployee, fetchEmployees } from "@/app/redux/employee/employeeReduxHelper";
+import { AppDispatch } from "@/app/redux/store";
 
 export default function Page() {
     const router = useRouter();
+    const dispatch = useDispatch<AppDispatch>();
     const [currentView, setCurrentView] = useState('grid'); // 'grid' or 'table'
     const toggleEmployeeView = (view: string) => {
         setCurrentView(view);
     }
-    const [employees, SetEmployees] = useState<Employee[] | null>(null);
-
+    const employees = useSelector((state : any) => state.storeEmployees.employees);
+    const employeeStatus = useSelector((state: any) => state.storeEmployees.status);
+    const error = useSelector((state: any) => state.storeEmployees.error);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const employeeList = await getEmployees();
-                SetEmployees(employeeList);
+                dispatch(fetchEmployees())
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

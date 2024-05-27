@@ -4,7 +4,9 @@ import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createEmployee, updateEmployee } from '@/app/lib/employee-service';
+import { useDispatch } from 'react-redux';
+import { createNewEmployee, updateExistingEmployee } from '@/app/redux/employee/employeeReduxHelper';
+import { AppDispatch } from '@/app/redux/store';
 
 export default function EmployeeAddEditForm(props: any) {
 
@@ -22,6 +24,7 @@ export default function EmployeeAddEditForm(props: any) {
   const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (!isAddMode) {
@@ -30,24 +33,15 @@ export default function EmployeeAddEditForm(props: any) {
   }, [])
 
   const employeeAddEditForm = async (data: any) => {
-    try {
       if (isAddMode) {
-        let employee: Employee = data as Employee;
-        await createEmployee(employee);
-        console.log("Button clicked");
+        let employee: IEmployee = data as IEmployee;
+       dispatch(createNewEmployee(employee));
       }
       else {
-        let employee: Employee = data as Employee;
-        await updateEmployee(employee.id, employee);
+        let employee: IEmployee = data as IEmployee;
+        dispatch(updateExistingEmployee({id: employee.id, employee}));
       }
-      console.log("router ", router);
       router.push("/employee/list");
-     
-    }
-    catch (error) {
-      console.error(error);
-    }
-
   }
 
   return (
@@ -106,10 +100,10 @@ export default function EmployeeAddEditForm(props: any) {
         <div className="row d-flex mb-3 me-3">
           <div className="col flex-grow-1"></div>
           <div className="col d-flex justify-content-end">
-            <button type="submit" className='btn btn-outline-primary' data-testid="submitbtn">{!isAddMode? "Update" : "Save"}</button>
+           
           </div>
         </div>
-
+        <input type="submit" className='btn btn-outline-primary' data-testid="submitbtn" value={!isAddMode? "Update" : "Save"} />
       </form>
     </div>
 

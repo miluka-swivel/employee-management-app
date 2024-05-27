@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import EmployeeEdit from '../app/employee/edit/[employeeId]/page'; // Assuming the component is named EmployeeEdit
 //import { getEmployee } from '@/app/lib/employee-service'; // Import the function to mock
 
@@ -28,30 +28,31 @@ jest.mock("next/navigation", () => ({
 
 const useRouter = jest.spyOn(require("next/navigation"), "useRouter");
 
-jest.mock('../app/lib/employee-service'); // Assuming this is where getEmployee resides
-
+jest.mock('../app/lib/employee-service');
 const { getEmployee } = require('../app/lib/employee-service'); // Mock import
 
 describe('EmployeeEdit component', () => {
     const mockEmployeeData = {
-                id: 1,
-                firstName: 'John',
-                lastName: 'Doe',
-                email: 'john.doe@example.com',
-                phone: '+94771234567',
-                gender: 'M',
-            };
-            
-    beforeEach(() => {
-        getEmployee.mockResolvedValue(mockEmployeeData); // Reset mocks before each test
+        id: 1,
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        phone: '+94771234567',
+        gender: 'M',
+    };
+
+    beforeEach(async () => {
+        await getEmployee.mockResolvedValue(mockEmployeeData); // Reset mocks before each test
     });
 
     it('renders the employee edit form with mocked data', async () => {
         const id = '123';
         const { params: { employeeId } } = { params: { employeeId: id } };
-        render(<EmployeeEdit params={{ employeeId }} />); 
-        expect(screen.getByText('John Doe')).toBeInTheDocument();
-        expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
+        await render(<EmployeeEdit params={{ employeeId }} />);
+        await waitFor(() => {
+            expect(screen.getByText('John Doe')).toBeInTheDocument();
+            expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
+        })
     });
 
     // it('renders the "List View" link', async () => {

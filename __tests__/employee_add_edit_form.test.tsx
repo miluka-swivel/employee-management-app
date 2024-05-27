@@ -3,11 +3,12 @@ import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EmployeeAddEditForm from '../app/employee/components/employe-add-edit-form'; // Replace with your component path
 import '@testing-library/jest-dom';
-import { createEmployee } from '../app/lib/employee-service';
+import { createEmployee, updateEmployee } from '../app/lib/employee-service';
 
 jest.mock('../app/lib/employee-service', () => ({
     createEmployee: jest.fn(),
-  }));
+    updateEmployee: jest.fn()
+}));
 
 
 
@@ -29,7 +30,7 @@ const useRouter = jest.spyOn(require("next/navigation"), "useRouter");
 
 describe('EmployeeAddEditForm component', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        //jest.clearAllMocks();
         //mockedRouter.push.mockClear();
         //mockedEmployeeService.createEmployee.mockClear();
         //mockedEmployeeService.updateEmployee.mockClear();
@@ -99,9 +100,7 @@ describe('EmployeeAddEditForm component', () => {
             push: jest.fn()
         }));
 
-        await act(async () => {
-            render(<EmployeeAddEditForm />);
-        });
+        render(<EmployeeAddEditForm />);
 
         // Simulate user input
         const firstNameInput = screen.getByLabelText('First Name');
@@ -110,19 +109,26 @@ describe('EmployeeAddEditForm component', () => {
         const phoneInput = screen.getByLabelText('Phone');
         const genderSelect = screen.getByLabelText('Gender');
 
-        await userEvent.type(firstNameInput, 'John');
-        await userEvent.type(lastNameInput, 'Doe');
+        await userEvent.type(firstNameInput, 'John Doe');
+        await userEvent.type(lastNameInput, 'Doe Brown');
         await userEvent.type(emailInput, 'john.doe@example.com');
         await userEvent.type(phoneInput, '+94771234567');
         userEvent.selectOptions(genderSelect, 'M');
 
         // Submit the form
-       
-            fireEvent.submit(screen.getByTestId('submitbtn'));
+
+        fireEvent.submit(screen.getByTestId('submitbtn'));
+        console.log("Submit button clicked");
 
         // Expect successful service call and navigation
-        expect(createEmployee).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(createEmployee).toHaveBeenCalledTimes(1));
         //expect(useRouter.push.call).toHaveBeenCalledWith('/employee/list');
+        // expect(screen.getByText('First name is required')).toBeInTheDocument();
+        // expect(screen.getByText('Last name is required')).toBeInTheDocument();
+        // expect(screen.getByText('Email is required')).toBeInTheDocument();
+        // expect(screen.getByText('Phone number is required')).toBeInTheDocument();
+        // expect(screen.getByText('Inavalid gender option')).toBeInTheDocument();
+        //expect(screen.getByDisplayValue('Male')).toBeInTheDocument();
     });
 
 

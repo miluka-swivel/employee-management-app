@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const GenerateTableRows = (employees : Employee[]) => {
+const GenerateTableRows = (employees : IEmployee[]) => {
 
     const getProfilePicture = (imagePath: string) => {
         if (!imagePath) {

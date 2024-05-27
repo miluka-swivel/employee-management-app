@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import EmployeeTable from '@/app/employee/list/employee-table';
 
 // Mock employee data
-const mockEmployees: Employee[] = [
+const mockEmployees: IEmployee[] = [
     { id: "1", firstName: 'John', lastName: 'Doe', email: 'john@example.com', phone: '1234567890', gender: 'M' },
     { id: "2", firstName: 'Jane', lastName: 'Doe', email: 'jane@example.com', phone: '0987654321', gender: 'F' }
 ];
