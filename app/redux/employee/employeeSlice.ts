@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchEmployees, fetchEmployee, createNewEmployee, updateExistingEmployee } from './employeeReduxHelper';
+import { fetchEmployees, fetchEmployee, createNewEmployee, updateExistingEmployee, removeEmployee } from './employeeReduxHelper';
 
 
 type Status = 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -18,9 +18,6 @@ const employeeSlice = createSlice({
     name : "employee",
     initialState,
     reducers: {
-        // addEmployee: (state, action) => {
-        //     state.value.push(action.payload)
-        // }
     },
     extraReducers: (builder) => {
         builder
@@ -35,7 +32,6 @@ const employeeSlice = createSlice({
             state.status = 'failed';
             state.error = action.error.message;
           })
-          // Similar cases for fetchEmployee, createNewEmployee, and updateExistingEmployee
           .addCase(fetchEmployee.fulfilled, (state, action) => {
             const index = state.employees.findIndex(emp => emp.id === action.payload.id);
             if (index !== -1) {
@@ -51,6 +47,11 @@ const employeeSlice = createSlice({
             const index = state.employees.findIndex(emp => emp.id === action.payload.id);
             if (index !== -1) {
               state.employees[index] = action.payload;
+            }
+          })
+          .addCase(removeEmployee.fulfilled, (state, action: PayloadAction<string>) => {
+            if (action.payload) {
+              state.employees = state.employees.filter(employee => employee.id !== action.payload);
             }
           });
       },
