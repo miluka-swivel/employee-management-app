@@ -48,7 +48,6 @@ export default function EmployeeCard(props: any) {
                 handleClose={() => setOpen(false)}
                 closeButtonText="No"
                 confirmButtonText="Yes">
-
             </ConfirmationModal>
         </div>
     );
