@@ -2,9 +2,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
-import EmployeeService from '@/app/lib/employee-service';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { createNewEmployee, updateExistingEmployee } from '@/app/redux/employee/employeeReduxHelper';
+import { AppDispatch } from '@/app/redux/store';
 
 export default function EmployeeAddEditForm(props: any) {
 
@@ -22,6 +24,7 @@ export default function EmployeeAddEditForm(props: any) {
   const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (!isAddMode) {
@@ -29,32 +32,24 @@ export default function EmployeeAddEditForm(props: any) {
     }
   }, [])
 
-  const employeeService = new EmployeeService();
-
-  const EmployeeAddEditForm = async (data: any) => {
-    try {
+  const employeeAddEditForm = async (data: any) => {
       if (isAddMode) {
-        let employee: Employee = data as Employee;
-        const createEmployee = await employeeService.createEmployee(employee);
+        let employee: IEmployee = data as IEmployee;
+       dispatch(createNewEmployee(employee));
       }
       else {
-        let employee: Employee = data as Employee;
-        const updatedEmployee = await employeeService.updateEmployee(employee.id, employee);
+        let employee: IEmployee = data as IEmployee;
+        dispatch(updateExistingEmployee({id: employee.id, employee}));
       }
       router.push("/employee/list");
-    }
-    catch (error) {
-      console.log(error);
-    }
-
   }
 
   return (
-    <div className="mx-auto card w-50">
-      <form onSubmit={handleSubmit(EmployeeAddEditForm)}>
+    <div className="mx-auto card w-50" data-testid="employee-add-edit-form">
+        <form onSubmit={handleSubmit(employeeAddEditForm)}>
         <div className="row mb-2 mt-4">
           <div className="col d-flex justify-content-end">
-            <label>First Name</label>
+            <label htmlFor="firstName">First Name</label>
           </div>
           <div className="col">
             <input type="text" {...register("firstName")} id="firstName"></input>
@@ -63,7 +58,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Last Name</label>
+            <label htmlFor="lastName">Last Name</label>
           </div>
           <div className="col">
             <input type="text" {...register("lastName")} id="lastName"></input>
@@ -72,7 +67,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Email</label>
+            <label htmlFor='email'>Email</label>
           </div>
           <div className="col">
             <input type="text" {...register("email")} id="email"></input>
@@ -81,7 +76,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Phone</label>
+            <label htmlFor='phone'>Phone</label>
           </div>
           <div className="col">
             <input type="text" {...register("phone")} id="phone"></input>
@@ -90,7 +85,7 @@ export default function EmployeeAddEditForm(props: any) {
         </div>
         <div className="row mb-2">
           <div className="col d-flex justify-content-end">
-            <label>Gender</label>
+            <label htmlFor='gender'>Gender</label>
           </div>
           <div className="col" >
             <select id="gender" {...register("gender")}>
@@ -105,10 +100,10 @@ export default function EmployeeAddEditForm(props: any) {
         <div className="row d-flex mb-3 me-3">
           <div className="col flex-grow-1"></div>
           <div className="col d-flex justify-content-end">
-            <button type="submit" className='btn btn-outline-primary'>{!isAddMode? "Update" : "Save"}</button>
+           
           </div>
         </div>
-
+        <input type="submit" className='btn btn-outline-primary' data-testid="submitbtn" value={!isAddMode? "Update" : "Save"} />
       </form>
     </div>
 

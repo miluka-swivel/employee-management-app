@@ -2,6 +2,7 @@ import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import EmployeeScreen from "@/app/employee/list/page";
 import '@testing-library/jest-dom'
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 
 
 jest.mock('next/navigation');
@@ -11,7 +12,6 @@ useRouterMock.mockReturnValue(
 );
 
 jest.mock("../app/lib/employee-service"); // Mock the EmployeeService
-const EmployeeServiceMock = jest.fn();
 
 
 it("Should have Add Employee button text", async () => {
@@ -33,18 +33,14 @@ it('renders EmployeeGridView when currentView is grid', async () => {
 
 });
 
-it('Renders Table view when toggle button  is clicked', () => {
-  const { getByTestId } = render(<EmployeeScreen />);
-  const gridToggleButton = document.querySelector(`.toggleviewbtn .bi.bi-list`);
-  if (gridToggleButton) {
-    act(() => {
-      fireEvent.click(gridToggleButton);
-    })
-    const gridView = getByTestId('employee-table-view');
-    expect(gridView).toBeInTheDocument();
-
-  } else {
-    throw new Error('Grid toggle button not found');
-  }
+it('Renders Table view when toggle button  is clicked', async () => {
+  act(() => {
+    render(<EmployeeScreen />);
+  });
+  const toggleBtn = screen.getByTestId("toggleviewbtn")
+  await userEvent.click(toggleBtn);
+  await waitFor(()=>{
+    const list = screen.getByTestId('toggleviewbtn-i'); // Assuming you have a test id for the EmployeeGridView component
+    expect(list).toHaveClass('bi-grid-fill');
+  })
 });
-

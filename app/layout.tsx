@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Inter } from "next/font/google";
-import   "./globals.css";
+import "./globals.css";
+import { ReduxProvider } from "./redux/Provider";
 
 const inter = Inter({ subsets: ["latin"] });;
 
@@ -19,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <div className="header p-2 mb-3">
-        <span>Employee Manager</span>
-      </div>
-        {children}
-        </body>
+        <ReduxProvider>
+          <div className="header p-2 mb-3">
+            <span>Employee Manager</span>
+          </div>
+          {children}
+        </ReduxProvider>
+      </body>
     </html>
   );
 }

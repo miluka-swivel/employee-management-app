@@ -1,6 +1,6 @@
 import EmployeeCard from "./employee-card";
-const renderRows = (employees: Employee[]) => {
-  return employees?.reduce((rows: JSX.Element[][], employee: Employee, index: number) => {
+const renderRows = (employees: IEmployee[]) => {
+  return employees?.reduce((rows: JSX.Element[][], employee: IEmployee, index: number) => {
     if (index % 4 === 0) {
       rows.push([]);
     }

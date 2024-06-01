@@ -8,17 +8,21 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --coverage",
+    "test1": "jest --findRelatedTests __tests__\\employee_simple_form.test.tsx",
     "test:watch": "test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "next": "14.1.4",
     "react": "^18",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",
+    "react-redux": "^9.1.2",
     "ts-node": "^10.9.2",
     "yup": "^1.4.0"
   },

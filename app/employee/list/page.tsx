@@ -4,22 +4,25 @@ import EmployeeGridView from "./employee-grid-view";
 import EmployeeTable from "./employee-table";
 import styles from '@/app/employee/employee.module.css';
 import { useRouter } from "next/navigation";
-import EmployeeService from "@/app/lib/employee-service";
+import { useSelector, useDispatch } from "react-redux"
+import { fetchEmployee, fetchEmployees } from "@/app/redux/employee/employeeReduxHelper";
+import { AppDispatch } from "@/app/redux/store";
 
 export default function Page() {
     const router = useRouter();
-    const employeeService = new EmployeeService();
+    const dispatch = useDispatch<AppDispatch>();
     const [currentView, setCurrentView] = useState('grid'); // 'grid' or 'table'
     const toggleEmployeeView = (view: string) => {
         setCurrentView(view);
     }
-    const [employees, SetEmployees] = useState<Employee[] | null>(null);
-
+    const employees = useSelector((state : any) => state.storeEmployees.employees);
+    const employeeStatus = useSelector((state: any) => state.storeEmployees.status);
+    const error = useSelector((state: any) => state.storeEmployees.error);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const employeeList = await employeeService.getEmployees();
-                SetEmployees(employeeList);
+                dispatch(fetchEmployees())
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -35,7 +38,7 @@ export default function Page() {
                     <button type="button" className={styles.button} onClick={() => router.push("/employee/add")}>ADD EMPLOYEE</button>
                 </div>
                 <div>
-                    <button type="button" className={`rounded-circle btn-lg ${styles.toggleviewbtn}`} onClick={() => toggleEmployeeView(currentView === 'grid' ? 'table' : 'grid')}><i className={`bi bi-${currentView === 'grid' ? 'list' : 'grid-fill'}`}></i></button>
+                <button data-testid="toggleviewbtn" type="button" className={`rounded-circle btn-lg ${styles.toggleviewbtn}`} onClick={() => toggleEmployeeView(currentView === 'grid' ? 'table' : 'grid')}><i data-testid='toggleviewbtn-i' className={`bi bi-${currentView === 'grid' ? 'list' : 'grid-fill'}`}></i></button>
                 </div>
             </div>
             {currentView === 'grid' ? <EmployeeGridView employeesList={employees} /> : <EmployeeTable employeesList={employees} />}
