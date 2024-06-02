@@ -4,6 +4,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReduxProvider } from "./redux/Provider";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+import GlobalError from "./error";
 
 const inter = Inter({ subsets: ["latin"] });;
 
@@ -20,12 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider>
-          <div className="header p-2 mb-3">
-            <span>Employee Manager</span>
-          </div>
-          {children}
-        </ReduxProvider>
+          <ReduxProvider>
+            <div className="header p-2 mb-3">
+              <span>Employee Manager</span>
+            </div>
+            {children}
+          </ReduxProvider>
       </body>
     </html>
   );

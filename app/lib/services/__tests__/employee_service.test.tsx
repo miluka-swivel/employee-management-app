@@ -1,4 +1,4 @@
-import { baseUrl, createEmployee, getEmployee, getEmployees, updateEmployee, mapToEmployee } from '@/app/lib/employee-service';
+import { baseUrl, createEmployee, getEmployee, getEmployees, updateEmployee, mapToEmployee, deleteEmployee } from "../employee-service";
 import axios from 'axios';
 
 jest.mock('axios'); // Mock axios for controlled testing
@@ -44,9 +44,7 @@ describe('EmployeeService', () => {
     it('should retrieve an employee by ID', async () => {
       const id = '123';
       mockAxios.get.mockResolvedValueOnce({ data: employeeData });
-
       const retrievedEmployee = await getEmployee(id);
-
       expect(retrievedEmployee).toEqual(employeeData); // Assert exact employee data
       expect(mockAxios.get).toHaveBeenCalledWith(`${baseUrl}/employees/${id}`);
     });
@@ -54,16 +52,13 @@ describe('EmployeeService', () => {
     it('should return null if employee not found', async () => {
       const id = '456';
       mockAxios.get.mockResolvedValueOnce({ data: null });
-
       const retrievedEmployee = await getEmployee(id);
-
       expect(retrievedEmployee).toBeNull();
     });
 
     it('should throw an error on server error', async () => {
       const id = '123';
       mockAxios.get.mockRejectedValueOnce(new Error('Server error'));
-
       await expect(getEmployee(id)).rejects.toThrowError('Server error');
     });
   });
@@ -91,13 +86,24 @@ describe('EmployeeService', () => {
       const id = '123';
       const updatedEmployee = { ...employeeData, email: 'updated@example.com' };
       mockAxios.put.mockResolvedValueOnce({ data: updatedEmployee });
-
       const returnedEmployee = await updateEmployee(id, updatedEmployee);
-
       expect(returnedEmployee).toEqual(updatedEmployee); // Assert exact employee data
       expect(mockAxios.put).toHaveBeenCalledWith(`${baseUrl}/employees/${id}`, updatedEmployee);
     });
     
+  });
+
+  describe("Delete employee ", () => {
+    it("Should delete employee when valid id given", async () => {
+      const id = "123";
+      const sucessResponse = true; //{ isSuccessful: true, message: "Employee deleted successfully" }
+      mockAxios.delete.mockResolvedValueOnce({data : sucessResponse});
+      const response = await deleteEmployee(id);
+      expect(response).toEqual(sucessResponse);
+      expect(mockAxios.delete).toHaveBeenCalledWith(`${baseUrl}/employees/${id}`);
+      
+    })
+
   });
  
 });

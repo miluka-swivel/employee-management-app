@@ -1,5 +1,5 @@
 
-import EmployeeAddEditForm from "../components/employe-add-edit-form";
+import EmployeeAddEditForm from "../../components/employe-add-edit-form";
 import Styles from "@/app/employee/employee.module.css";
 import Link from "next/link";
 
