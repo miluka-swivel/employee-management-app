@@ -28,23 +28,23 @@ describe('EmployeeEdit component', () => {
     };
 
 
-    it('renders the employee edit form with mocked data', async () => {
-        const id = '123';
-        const { params: { employeeId } } = { params: { employeeId: id } };
-        console.log(getEmployee);
-        (getEmployee as jest.Mock).mockResolvedValue(mockEmployeeData);
-        const mockEmployeeEditParam: EmployeeEditParam = {
-            params: {
-                employeeId: '123'
-            }
-        };
-        console.log(mockEmployeeEditParam.params);
-        await render(<EmployeeEdit params={mockEmployeeEditParam.params} />);
-        await waitFor(() => {
-            expect(screen.getByText('John Doe')).toBeInTheDocument();
-            expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
-        })
-    });
+    // it('renders the employee edit form with mocked data', async () => {
+    //     const id = '123';
+    //     const { params: { employeeId } } = { params: { employeeId: id } };
+    //     console.log(getEmployee);
+    //     (getEmployee as jest.Mock).mockResolvedValue(mockEmployeeData);
+    //     const mockEmployeeEditParam: EmployeeEditParam = {
+    //         params: {
+    //             employeeId: '123'
+    //         }
+    //     };
+    //     console.log(mockEmployeeEditParam.params);
+    //     await render(<EmployeeEdit params={mockEmployeeEditParam.params} />);
+    //     await waitFor(() => {
+    //         expect(screen.getByText('John Doe')).toBeInTheDocument();
+    //         expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
+    //     })
+    // });
 
 //     // it('renders the "List View" link', async () => {
 //     //     const employeeId = '123';

@@ -3,7 +3,9 @@ import EmployeeGridView from '@/app/employee/list/employee-grid-view';
 
 
 // Mock EmployeeCard component
-jest.mock('../../list/employee-card', () => () => <div data-testid="mock-employee-card" />);
+jest.mock('../../list/employee-card', () => {
+    () => <div data-testid="mock-employee-card" />
+});
 
 describe('EmployeeGridView component', () => {
     it('renders without crashing', () => {

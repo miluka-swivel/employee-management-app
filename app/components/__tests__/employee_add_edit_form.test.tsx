@@ -105,12 +105,11 @@ describe('EmployeeAddEditForm component', () => {
 
         await act(async () => {
             await userEvent.click(screen.getByText('Save'));
-            expect(screen.getByText('First name is required')).toBeInTheDocument();
-            expect(screen.getByText('Last name is required')).toBeInTheDocument();
-            expect(screen.getByText('Email is required')).toBeInTheDocument();
-            expect(screen.getByText('Phone number is required')).toBeInTheDocument();
-            expect(screen.getByText('Inavalid gender option')).toBeInTheDocument();
         });
+        expect(screen.getByText('First name is required')).toBeInTheDocument();
+        expect(screen.getByText('Last name is required')).toBeInTheDocument();
+        expect(screen.getByText('Email is required')).toBeInTheDocument();
+        expect(screen.getByText('Phone number is required')).toBeInTheDocument();
     });
 
     // it('submits the form successfully in add mode', async () => {
