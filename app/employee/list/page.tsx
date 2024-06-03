@@ -5,7 +5,7 @@ import EmployeeTable from "./employee-table";
 import styles from '@/app/employee/employee.module.css';
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux"
-import { fetchEmployee, fetchEmployees } from "@/app/redux/employee/employeeReduxHelper";
+import { fetchEmployees } from "@/app/redux/employee/employeeReduxHelper";
 import { AppDispatch } from "@/app/redux/store";
 
 export default function Page() {
@@ -24,7 +24,8 @@ export default function Page() {
                 dispatch(fetchEmployees())
 
             } catch (error) {
-                console.error('Error fetching data:', error);
+                //console.error('Error fetching data:', error);
+                throw new Error('Error fetching employee data');
             }
         };
 

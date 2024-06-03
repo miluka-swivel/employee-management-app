@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ConfirmationModal from "../components/employee-modal";
+import ConfirmationModal from "../../components/employee-modal";
 import { useState } from "react";
 import { AppDispatch } from "@/app/redux/store";
 import { useDispatch } from "react-redux";

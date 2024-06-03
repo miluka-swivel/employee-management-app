@@ -2,6 +2,21 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import EmployeeCard from '@/app/employee/list/employee-card';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+
+// Mock store setup
+const mockStore = configureStore([]);
+const store = mockStore({});
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => jest.fn()
+}));
+
+jest.mock("../../../redux/employee/employeeReduxHelper", () => ({
+  removeEmployee: jest.fn(() => ({ type: 'REMOVE_EMPLOYEE' }))
+}));
 
 describe('EmployeeCard Component', () => {
   const mockProps = {
@@ -15,8 +30,12 @@ describe('EmployeeCard Component', () => {
   };
 
   test('renders employee information correctly', () => {
-    render(<EmployeeCard {...mockProps} />);
-    
+    render(
+      <Provider store={store}>
+        <EmployeeCard {...mockProps} />
+      </Provider>
+    );
+
     // Check if all the information is rendered correctly
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('john@example.com')).toBeInTheDocument();
@@ -34,7 +53,7 @@ describe('EmployeeCard Component', () => {
 
   test('renders edit link with correct href', () => {
     render(<EmployeeCard {...mockProps} />);
-    
+
     // Check if edit link is rendered with correct href
     expect(screen.getByRole('link')).toHaveAttribute('href', 'edit/1');
   });

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createEmployee, getEmployee, getEmployees, updateEmployee, deleteEmployee } from '../../lib/employee-service'; // Adjust the import according to your file structure
+import { createEmployee, getEmployee, getEmployees, updateEmployee, deleteEmployee } from '../../lib/services/employee-service'; // Adjust the import according to your file structure
 
 export const fetchEmployees = createAsyncThunk<IEmployee[]>('employees/fetchEmployees', async () => {
   const response = await getEmployees();
