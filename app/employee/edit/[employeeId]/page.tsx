@@ -8,7 +8,6 @@ async function getData(id: string) {
 }
 
 export default async function Page(params: EmployeeEditParam) {
-  console.log(params);
   const { employeeId } = params.params;
   let employeeData = await getData(employeeId);
   employeeData.id = employeeId;
