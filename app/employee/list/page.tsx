@@ -21,7 +21,6 @@ export default function Page() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                throw new Error('Error fetching employee data');
                 dispatch(fetchEmployees())
 
             } catch (error) {
