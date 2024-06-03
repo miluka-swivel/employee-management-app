@@ -15,38 +15,36 @@ jest.mock("next/navigation", () => ({
 }));
 
 const useRouter = jest.spyOn(require("next/navigation"), "useRouter");
-
-//const { getEmployee } = require('../app/lib/employee-service'); // Mock import
 jest.mock("../../../../lib/services/employee-service");
 
-// describe('EmployeeEdit component', () => {
-//     const mockEmployeeData = {
-//         id: "123",
-//         firstName: 'John',
-//         lastName: 'Doe',
-//         email: 'john.doe@example.com',
-//         phone: '+94771234567',
-//         gender: 'M',
-//     };
+describe('EmployeeEdit component', () => {
+    const mockEmployeeData = {
+        id: "123",
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        phone: '+94771234567',
+        gender: 'M',
+    };
 
 
-//     it('renders the employee edit form with mocked data', async () => {
-//         const id = '123';
-//         const { params: { employeeId } } = { params: { employeeId: id } };
-//         console.log(getEmployee);
-//         (getEmployee as jest.Mock).mockResolvedValue(mockEmployeeData);
-//         const mockEmployeeEditParam: EmployeeEditParam = {
-//             params: {
-//                 employeeId: '123'
-//             }
-//         };
-//         console.log(mockEmployeeEditParam.params);
-//         await render(<EmployeeEdit params={mockEmployeeEditParam.params} />);
-//         await waitFor(() => {
-//             expect(screen.getByText('John Doe')).toBeInTheDocument();
-//             expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
-//         })
-//     });
+    it('renders the employee edit form with mocked data', async () => {
+        const id = '123';
+        const { params: { employeeId } } = { params: { employeeId: id } };
+        console.log(getEmployee);
+        (getEmployee as jest.Mock).mockResolvedValue(mockEmployeeData);
+        const mockEmployeeEditParam: EmployeeEditParam = {
+            params: {
+                employeeId: '123'
+            }
+        };
+        console.log(mockEmployeeEditParam.params);
+        await render(<EmployeeEdit params={mockEmployeeEditParam.params} />);
+        await waitFor(() => {
+            expect(screen.getByText('John Doe')).toBeInTheDocument();
+            expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
+        })
+    });
 
 //     // it('renders the "List View" link', async () => {
 //     //     const employeeId = '123';
@@ -57,4 +55,4 @@ jest.mock("../../../../lib/services/employee-service");
 //     //     expect(listViewLink).toBeInTheDocument();
 //     //     expect(listViewLink).toHaveAttribute('href', '/employee/list');
 //     // });
-// });
+});
